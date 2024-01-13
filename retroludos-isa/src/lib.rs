@@ -167,7 +167,6 @@ pub enum NoExplSourceOpcode {
     Pop = 0b_00_0000,
     Ldsp = 0b_00_0001,
     Ldf = 0b_00_0010,
-    In = 0b_00_0011,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -185,7 +184,6 @@ pub enum NoExplDestOpcode {
     Stf = 0b_00_0100,
     Jabs = 0b_00_0101,
     Cabs = 0b_00_0110,
-    Out = 0b_00_0111,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
