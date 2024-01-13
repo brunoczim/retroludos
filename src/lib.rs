@@ -150,7 +150,9 @@ pub struct NoExplOperandsInstr {
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub enum NoExplOperandsOpcode {}
+pub enum NoExplOperandsOpcode {
+    Nop = 0b_0000_0000,
+}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct ImplicitSourceInstr {
@@ -159,7 +161,9 @@ pub struct ImplicitSourceInstr {
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub enum ImplicitSourceOpcode {}
+pub enum ImplicitSourceOpcode {
+    Pop = 0b_00_0000,
+}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct ImplicitDestInstr {
@@ -168,7 +172,9 @@ pub struct ImplicitDestInstr {
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub enum ImplicitDestOpcode {}
+pub enum ImplicitDestOpcode {
+    Push = 0b_00_0000,
+}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct IntUnaryOpInstr {
@@ -178,7 +184,10 @@ pub struct IntUnaryOpInstr {
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub enum IntUnaryOpOpcode {}
+pub enum IntUnaryOpOpcode {
+    Not = 0b_00_0000,
+    Neg = 0b_00_0001,
+}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct IntBinaryOpInstr {
