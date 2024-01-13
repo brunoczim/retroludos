@@ -80,11 +80,11 @@ pub enum InstructionTag {
 
     /// Bits except operands:   13  = 16 - 3
     /// Opcode bits:            6   = 13 - 7
-    ImplicitSource = 0b_011_1111,
+    NoExplSource = 0b_011_1111,
 
     /// Bits except operands:   13  = 16 - 3
     /// Opcode bits:            6   = 13 - 7
-    ImplicitDest = 0b_011_1110,
+    NoExplDest = 0b_011_1110,
 
     /// Bits except operands:   12  = 16 - (2 * 2 = 4)
     /// Opcode bits:            6   = 12 - 6
@@ -92,7 +92,7 @@ pub enum InstructionTag {
 
     /// Bits except operands:   12  = 16 - (2 * 2 = 4)
     /// Opcode bits:            6   = 12 - 6
-    RatioBinImplicitDest = 0b_01_1110,
+    RatioBinNoExplDest = 0b_01_1110,
 
     /// Bits except operands:   11  = 16 - (2 + 3 = 5)
     /// Opcode bits:            6   = 11 - 5
@@ -112,11 +112,11 @@ pub enum InstructionTag {
 
     /// Bits except operands:   10  = 16 - (3 * 2 = 6)
     /// Opcode bits:            7   = 10 - 3
-    IntBinImplicitDest = 0b_011,
+    IntBinNoExplDest = 0b_011,
 
     /// Bits except operands:   8   = 16 - 8
     /// Opcode bits:            5   = 8 - 3
-    ImplicitDestImm = 0b_010,
+    NoExplDestImm = 0b_010,
 
     /// Bits except operands:   7   = 16 - (3 * 3 = 9)
     /// Opcode bits:            5   = 7 - 2
@@ -130,18 +130,18 @@ pub enum InstructionTag {
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum Instruction {
     NoExplOperands(NoExplOperandsInstr),
-    ImplicitSource(ImplicitSourceInstr),
-    ImplicitDest(ImplicitDestInstr),
+    NoExplSource(NoExplSourceInstr),
+    NoExplDest(NoExplDestInstr),
     IntUnaryOp(IntUnaryOpInstr),
     IntBinaryOp(IntBinaryOpInstr),
-    IntBinImplicitDest(IntBinImplicitDestInstr),
+    IntBinNoExplDest(IntBinNoExplDestInstr),
     RatioUnaryOp(RatioUnaryOpInstr),
     RatioBinaryOp(RatioBinaryOpInstr),
-    RatioBinImplicitDest(RatioBinImplicitDestInstr),
+    RatioBinNoExplDest(RatioBinNoExplDestInstr),
     IntToRatio(IntToRatioInstr),
     RatioToInt(RatioToIntInstr),
     Immediate(ImmediateInstr),
-    ImplicitDestImm(ImplicitDestImmInstr),
+    NoExplDestImm(NoExplDestImmInstr),
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -155,25 +155,30 @@ pub enum NoExplOperandsOpcode {
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct ImplicitSourceInstr {
-    pub opcode: ImplicitSourceOpcode,
+pub struct NoExplSourceInstr {
+    pub opcode: NoExplSourceOpcode,
     pub dest: IntRegister,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub enum ImplicitSourceOpcode {
+pub enum NoExplSourceOpcode {
     Pop = 0b_00_0000,
+    Ldsp = 0b_00_0001,
+    Jmpa = 0b_00_0010,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct ImplicitDestInstr {
-    pub opcode: ImplicitDestOpcode,
+pub struct NoExplDestInstr {
+    pub opcode: NoExplDestOpcode,
     pub source: IntRegister,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub enum ImplicitDestOpcode {
+pub enum NoExplDestOpcode {
     Push = 0b_00_0000,
+    Stsp = 0b_00_0001,
+    Addsp = 0b_00_0010,
+    Subsp = 0b_00_0011,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -198,17 +203,33 @@ pub struct IntBinaryOpInstr {
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub enum IntBinaryOpOpcode {}
+pub enum IntBinaryOpOpcode {
+    Or = 0b_00_0000,
+    And = 0b_00_0001,
+    Xor = 0b_00_0010,
+    Shl = 0b_00_0011,
+    Shr = 0b_00_0100,
+    Rol = 0b_00_0101,
+    Ror = 0b_00_0110,
+    Add = 0b_00_0111,
+    Sub = 0b_00_1000,
+    Mul = 0b_00_1001,
+    Mulu = 0b_00_1010,
+    Muls = 0b_00_1011,
+    Quot = 0b_00_1100,
+    Rem = 0b_00_1101,
+    Div = 0b_00_1110,
+}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct IntBinImplicitDestInstr {
-    pub opcode: IntBinImplicitDestOpcode,
+pub struct IntBinNoExplDestInstr {
+    pub opcode: IntBinNoExplDestOpcode,
     pub lhs: IntRegister,
     pub rhs: IntRegister,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub enum IntBinImplicitDestOpcode {}
+pub enum IntBinNoExplDestOpcode {}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct RatioUnaryOpInstr {
@@ -232,14 +253,14 @@ pub struct RatioBinaryOpInstr {
 pub enum RatioBinaryOpOpcode {}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct RatioBinImplicitDestInstr {
-    pub opcode: RatioBinImplicitDestOpcode,
+pub struct RatioBinNoExplDestInstr {
+    pub opcode: RatioBinNoExplDestOpcode,
     pub lhs: RatioRegister,
     pub rhs: RatioRegister,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub enum RatioBinImplicitDestOpcode {}
+pub enum RatioBinNoExplDestOpcode {}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct IntToRatioInstr {
@@ -274,20 +295,20 @@ pub enum ImmediateOpcode {
     Ldih = 0b_001,
     Oril = 0b_010,
     Orih = 0b_011,
-    Andil = 0b_100,
-    Andih = 0b_101,
+    Shli = 0b_100,
+    Shri = 0b_101,
     Addi = 0b_110,
     Muli = 0b_111,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct ImplicitDestImmInstr {
-    pub opcode: ImplicitDestImmOpcode,
+pub struct NoExplDestImmInstr {
+    pub opcode: NoExplDestImmOpcode,
     pub immediate: i8,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub enum ImplicitDestImmOpcode {
+pub enum NoExplDestImmOpcode {
     Jmp = 0b_0000,
     Jc = 0b_0001,
     Jnc = 0b_0010,
