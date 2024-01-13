@@ -153,6 +153,7 @@ pub struct NoExplOperandsInstr {
 pub enum NoExplOperandsOpcode {
     Nop = 0b_0000_0000,
     Ret = 0b_0000_0001,
+    Halt = 0b_000_0010,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -166,6 +167,7 @@ pub enum NoExplSourceOpcode {
     Pop = 0b_00_0000,
     Ldsp = 0b_00_0001,
     Ldf = 0b_00_0010,
+    In = 0b_00_0011,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -183,6 +185,7 @@ pub enum NoExplDestOpcode {
     Stf = 0b_00_0100,
     Jabs = 0b_00_0101,
     Cabs = 0b_00_0110,
+    Out = 0b_00_0111,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -248,7 +251,10 @@ pub struct RatioUnaryOpInstr {
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub enum RatioUnaryOpOpcode {}
+pub enum RatioUnaryOpOpcode {
+    Neg = 0b_00_0000,
+    Inv = 0b_00_0001,
+}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct RatioBinaryOpInstr {
@@ -259,7 +265,16 @@ pub struct RatioBinaryOpInstr {
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub enum RatioBinaryOpOpcode {}
+pub enum RatioBinaryOpOpcode {
+    Addru = 0b_00_0000,
+    Addrs = 0b_00_0001,
+    Subru = 0b_00_0010,
+    Subrs = 0b_00_0011,
+    Mulru = 0b_00_0100,
+    Mulrs = 0b_00_0101,
+    Divru = 0b_00_0110,
+    Divrs = 0b_00_0111,
+}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct RatioBinNoExplDestInstr {
@@ -269,7 +284,9 @@ pub struct RatioBinNoExplDestInstr {
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub enum RatioBinNoExplDestOpcode {}
+pub enum RatioBinNoExplDestOpcode {
+    Cmpr = 0b_00_0000,
+}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct IntToRatioInstr {
@@ -279,7 +296,11 @@ pub struct IntToRatioInstr {
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub enum IntToRatioOpcode {}
+pub enum IntToRatioOpcode {
+    Rat = 0b_00_0000,
+    Ldden = 0b_00_0001,
+    Ldnum = 0b_00_0010,
+}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct RatioToIntInstr {
@@ -289,7 +310,14 @@ pub struct RatioToIntInstr {
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub enum RatioToIntOpcode {}
+pub enum RatioToIntOpcode {
+    Rnd = 0b_00_0000,
+    Trnc = 0b_00_0001,
+    Flr = 0b_00_0010,
+    Ceil = 0b_00_0011,
+    Stden = 0b_00_0100,
+    Stnum = 0b_00_0101,
+}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct ImmediateInstr {
