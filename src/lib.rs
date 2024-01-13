@@ -152,6 +152,7 @@ pub struct NoExplOperandsInstr {
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum NoExplOperandsOpcode {
     Nop = 0b_0000_0000,
+    Ret = 0b_0000_0001,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -164,7 +165,7 @@ pub struct NoExplSourceInstr {
 pub enum NoExplSourceOpcode {
     Pop = 0b_00_0000,
     Ldsp = 0b_00_0001,
-    Jmpa = 0b_00_0010,
+    Ldf = 0b_00_0010,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -179,6 +180,9 @@ pub enum NoExplDestOpcode {
     Stsp = 0b_00_0001,
     Addsp = 0b_00_0010,
     Subsp = 0b_00_0011,
+    Stf = 0b_00_0100,
+    Jabs = 0b_00_0101,
+    Cabs = 0b_00_0110,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -190,8 +194,10 @@ pub struct IntUnaryOpInstr {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum IntUnaryOpOpcode {
-    Not = 0b_00_0000,
-    Neg = 0b_00_0001,
+    Cpy = 0b_00_0000,
+    St = 0b_00_0001,
+    Not = 0b_00_0010,
+    Neg = 0b_00_0011,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -229,7 +235,10 @@ pub struct IntBinNoExplDestInstr {
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub enum IntBinNoExplDestOpcode {}
+pub enum IntBinNoExplDestOpcode {
+    Cmp = 0b_000_0000,
+    Ld = 0b_000_0001,
+}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct RatioUnaryOpInstr {
@@ -310,16 +319,19 @@ pub struct NoExplDestImmInstr {
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum NoExplDestImmOpcode {
     Jmp = 0b_0000,
-    Jc = 0b_0001,
-    Jnc = 0b_0010,
-    Jb = 0b_0011,
-    Jnb = 0b_0100,
-    Js = 0b_0101,
-    Jns = 0b_0110,
-    Jz = 0b_0111,
-    Jnz = 0b_1000,
-    Ja = 0b_1001,
-    Jge = 0b_1010,
-    Jl = 0b_1011,
-    Jbe = 0b_1100,
+    Call = 0b_0001,
+    Jc = 0b_0010,
+    Jnc = 0b_0011,
+    Jb = 0b_0100,
+    Jnb = 0b_0101,
+    Jo = 0b_0110,
+    Jno = 0b_0111,
+    Js = 0b_1000,
+    Jns = 0b_1001,
+    Jz = 0b_1010,
+    Jnz = 0b_1011,
+    Ja = 0b_1100,
+    Jge = 0b_1101,
+    Jl = 0b_1110,
+    Jbe = 0b_1111,
 }
