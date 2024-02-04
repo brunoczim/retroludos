@@ -1,14 +1,14 @@
 #[repr(u8)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum IntRegister {
-    I0 = 0,
-    I1 = 1,
-    I2 = 2,
-    I3 = 3,
-    I4 = 4,
-    I5 = 5,
-    I6 = 6,
-    I7 = 7,
+    I0 = 0b_000,
+    I1 = 0b_001,
+    I2 = 0b_010,
+    I3 = 0b_011,
+    I4 = 0b_100,
+    I5 = 0b_101,
+    I6 = 0b_110,
+    I7 = 0b_111,
 }
 
 impl IntRegister {
@@ -44,10 +44,10 @@ impl IntRegister {
 #[repr(u8)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum RatioRegister {
-    R0 = 0,
-    R1 = 1,
-    R2 = 2,
-    R3 = 3,
+    R0 = 0b_00,
+    R1 = 0b_01,
+    R2 = 0b_10,
+    R3 = 0b_11,
 }
 
 impl RatioRegister {
@@ -106,13 +106,13 @@ pub enum InstructionTag {
     /// Opcode bits:            6   = 10 - 4
     IntUnaryOp = 0b_0111,
 
-    /// Bits except operands:   10  = 16 - (2 * 3 = 6)
-    /// Opcode bits:            6   = 10 - 4
-    RatioBinaryOp = 0b_0110,
-
     /// Bits except operands:   10  = 16 - (3 * 2 = 6)
+    /// Opcode bits:            6   = 10 - 4
+    IntBinNoExplDest = 0b_0110,
+
+    /// Bits except operands:   10  = 16 - (2 * 3 = 6)
     /// Opcode bits:            7   = 10 - 3
-    IntBinNoExplDest = 0b_011,
+    RatioBinaryOp = 0b_011,
 
     /// Bits except operands:   8   = 16 - 8
     /// Opcode bits:            5   = 8 - 3

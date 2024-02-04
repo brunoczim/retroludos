@@ -1,3 +1,6 @@
 [workspace]
-members = ["retroludos-isa"]
+members = [ "retroludos-cpu","retroludos-isa"]
 resolver = "2"
+
+[workspace.dependencies]
+thiserror = "1.0"
